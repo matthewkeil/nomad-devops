@@ -1,0 +1,31 @@
+{
+  "include": [
+    "package.json",
+    "index.ts",
+    "test.ts",
+    "config/**/*",
+    "templates/**/*",
+    "bin/**/*",
+    "lib/**/*",
+    "src/**/*"
+  ],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "lib": ["ESNext", "ESNext.AsyncIterable", "ES2020"],
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
+    "sourceMap": true,
+    "declaration": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "baseUrl": ".",
+    "outDir": "dist",
+    "types": ["node"],
+    "typeRoots": ["node_modules/@types"]
+  }
+}
