@@ -28,14 +28,14 @@ const resourceTypes = new Set<ResourceType>(
 );
 
 const sendResponse = ({
-  event,
+  ResponseURL,
   response
 }: {
-  event: CloudFormationCustomResourceEvent;
+  ResponseURL: string;
   response: CloudFormationCustomResourceResponse;
 }) =>
   axios({
-    url: event.ResponseURL,
+    url: ResponseURL,
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -47,20 +47,21 @@ const sendResponse = ({
 export const handler: CloudFormationCustomResourceHandler = async (event, context) => {
   const RequestId = v4();
   const type = event.ResourceType.split("::").pop() as ResourceType;
+  const { ResponseURL, StackId, LogicalResourceId } = event;
   if (!resourceTypes.has(type)) {
     await sendResponse({
-      event,
+      ResponseURL,
       response: {
         Status: "FAILED",
         Reason: "NomadDevops doesn't have that kind of custom resource",
-        PhysicalResourceId: event.RequestType,
-        StackId: event.StackId,
+        PhysicalResourceId: LogicalResourceId,
+        StackId,
         RequestId,
-        LogicalResourceId: event.LogicalResourceId
+        LogicalResourceId
       }
     });
     return;
   }
 
-  await sendResponse({ event, response: await resourceProviders[type](event, context) });
+  await sendResponse({ ResponseURL, response: await resourceProviders[type](event, context) });
 };
