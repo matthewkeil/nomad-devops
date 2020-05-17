@@ -33,7 +33,7 @@ export const deployCore = async ({ rootDomain, stackName }: CoreStackParam) => {
   const template = await buildCoreTemplate({
     stackName,
     hostedZone: (zoneInfo || {}).HostedZoneId,
-    certificate: certificate ? certificate.CertificateArn : undefined,
+    certificate: certificate?.Certificate ? certificate.Certificate.CertificateArn : undefined,
     cognito: false
   });
 

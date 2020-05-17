@@ -1,5 +1,6 @@
 import { config } from "../../config";
 import { normalizeDomain } from "../strings";
+import { ACM } from "aws-sdk";
 
 const extractSubdomains = (domain, base) => {
   const result = normalizeDomain(domain).replace(normalizeDomain(base), "");
@@ -7,6 +8,12 @@ const extractSubdomains = (domain, base) => {
 };
 
 export const getCertForDomain = async (domain: string) => {
+  async function finalize(Certificate: ACM.CertificateDetail) {
+    if (Certificate?.CertificateArn)
+      return await config.acm
+        .describeCertificate({ CertificateArn: Certificate.CertificateArn })
+        .promise();
+  }
   const { CertificateSummaryList } = await config.acm.listCertificates().promise();
   const certSummary = CertificateSummaryList.find(({ DomainName }) =>
     normalizeDomain(domain).endsWith(normalizeDomain(DomainName))
@@ -15,7 +22,6 @@ export const getCertForDomain = async (domain: string) => {
     const { CertificateArn } = certSummary;
     const { Certificate } = await config.acm.describeCertificate({ CertificateArn }).promise();
     const subDomain = extractSubdomains(domain, Certificate.DomainName);
-
     if (subDomain !== "") {
       if (Certificate.SubjectAlternativeNames && Certificate.SubjectAlternativeNames.length) {
         const match = Certificate.SubjectAlternativeNames.find(altName => {
@@ -23,11 +29,10 @@ export const getCertForDomain = async (domain: string) => {
           if (altSubDomain === "*") return true;
           if (altSubDomain === subDomain) return true;
         });
-        if (match) return Certificate;
+        if (match) return finalize(Certificate);
       }
       return;
     }
-
-    return Certificate;
+    return finalize(Certificate);
   }
 };

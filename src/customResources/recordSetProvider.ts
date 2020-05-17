@@ -1,23 +1,55 @@
-import {
-    Context,
-    CloudFormationCustomResourceCreateEvent,
-    CloudFormationCustomResourceUpdateEvent,
-    CloudFormationCustomResourceDeleteEvent
-  } from "aws-lambda";
-  import { ResourceHandler } from "./customResourceProvider";
-  
-  const createRecordSet = (event: CloudFormationCustomResourceCreateEvent, context: Context) => {};
-  const updateRecordSet = (event: CloudFormationCustomResourceUpdateEvent, context: Context) => {};
-  const deleteRecordSet = (event: CloudFormationCustomResourceDeleteEvent, context: Context) => {};
-  
-  export const recordSetProvider: ResourceHandler = async (event, context) => {
+import DEBUG from "debug";
+const Debug = (filter: string) =>
+  DEBUG(
+    "devops:src:customResources:certificateRequestProvider" + (filter.length ? `:${filter}` : "")
+  );
+const debug = Debug("");
+import { CloudFormationCustomResourceResponse } from "aws-lambda";
+import { ResourceHandler } from "./customResourceProvider";
+import {} from "../../lib";
+
+export const recordSetProvider: ResourceHandler = async event => {
+  try {
+    let results;
+    let recordInfo;
     switch (event.RequestType.toLowerCase()) {
       case "create":
-        return createRecordSet(event as CloudFormationCustomResourceCreateEvent, context);
+        break;
       case "update":
-        return updateRecordSet(event as CloudFormationCustomResourceUpdateEvent, context);
+        break;
       case "delete":
-        return deleteRecordSet(event as CloudFormationCustomResourceDeleteEvent, context);
+        break;
+      default:
+        return Promise.resolve({
+          Status: "FAILED",
+          RequestId: event.RequestId,
+          StackId: event.StackId,
+          PhysicalResourceId: "NomadDevops::RecordSet",
+          LogicalResourceId: event.LogicalResourceId,
+          Reason: "invalid event.RequestType"
+        });
     }
-  };
-  
+    debug(results);
+
+    const response: CloudFormationCustomResourceResponse = {
+      Status: "SUCCESS",
+      RequestId: event.RequestId,
+      StackId: event.StackId,
+      PhysicalResourceId: "NomadDevops::RecordSet",
+      LogicalResourceId: event.LogicalResourceId
+    };
+    if (recordInfo) {
+      response.Data = {};
+    }
+    return response;
+  } catch (err) {
+    return {
+      Status: "FAILED",
+      RequestId: event.RequestId,
+      StackId: event.StackId,
+      PhysicalResourceId: "NomadDevops::RecordSet",
+      LogicalResourceId: event.LogicalResourceId,
+      Reason: JSON.stringify(err)
+    };
+  }
+};

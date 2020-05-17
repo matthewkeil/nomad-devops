@@ -1,22 +1,55 @@
-import {
-  Context,
-  CloudFormationCustomResourceCreateEvent,
-  CloudFormationCustomResourceUpdateEvent,
-  CloudFormationCustomResourceDeleteEvent
-} from "aws-lambda";
+import DEBUG from "debug";
+const Debug = (filter: string) =>
+  DEBUG(
+    "devops:src:customResources:certificateRequestProvider" + (filter.length ? `:${filter}` : "")
+  );
+const debug = Debug("");
+import { CloudFormationCustomResourceResponse } from "aws-lambda";
 import { ResourceHandler } from "./customResourceProvider";
+import {} from "../../lib";
 
-const createCertificate = (event: CloudFormationCustomResourceCreateEvent, context: Context) => {};
-const updateCertificate = (event: CloudFormationCustomResourceUpdateEvent, context: Context) => {};
-const deleteCertificate = (event: CloudFormationCustomResourceDeleteEvent, context: Context) => {};
+export const certificateProvider: ResourceHandler = async event => {
+  try {
+    let results;
+    let certInfo;
+    switch (event.RequestType.toLowerCase()) {
+      case "create":
+        break;
+      case "update":
+        break;
+      case "delete":
+        break;
+      default:
+        return Promise.resolve({
+          Status: "FAILED",
+          RequestId: event.RequestId,
+          StackId: event.StackId,
+          PhysicalResourceId: "NomadDevops::Certificate",
+          LogicalResourceId: event.LogicalResourceId,
+          Reason: "invalid event.RequestType"
+        });
+    }
+    debug(results);
 
-export const certificateProvider: ResourceHandler = async (event, context) => {
-  switch (event.RequestType.toLowerCase()) {
-    case "create":
-      return createCertificate(event as CloudFormationCustomResourceCreateEvent, context);
-    case "update":
-      return updateCertificate(event as CloudFormationCustomResourceUpdateEvent, context);
-    case "delete":
-      return deleteCertificate(event as CloudFormationCustomResourceDeleteEvent, context);
+    const response: CloudFormationCustomResourceResponse = {
+      Status: "SUCCESS",
+      RequestId: event.RequestId,
+      StackId: event.StackId,
+      PhysicalResourceId: "NomadDevops::Certificate",
+      LogicalResourceId: event.LogicalResourceId
+    };
+    if (certInfo) {
+      response.Data = {};
+    }
+    return response;
+  } catch (err) {
+    return {
+      Status: "FAILED",
+      RequestId: event.RequestId,
+      StackId: event.StackId,
+      PhysicalResourceId: "NomadDevops::Certificate",
+      LogicalResourceId: event.LogicalResourceId,
+      Reason: JSON.stringify(err)
+    };
   }
 };
