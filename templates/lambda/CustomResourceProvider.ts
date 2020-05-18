@@ -4,11 +4,11 @@ export const CustomResourceProvider = new Lambda.Function({
   Description: "Nomad Devops CloudFormation Custom::Respource Provider",
   FunctionName: "nomad-devops-custom-resource-provider",
   Role: Fn.GetAtt("CustomResourceProviderRole", "Arn"),
-  Runtime: "nodejs10.x",
+  Runtime: "nodejs12.x",
   Code: {
-    S3Bucket: Fn.Ref("NomadDevopsBucket"),
-    S3Key: Fn.Ref("NomadDevopsHandlerKey")
+    S3Bucket: "nomad-devops",
+    S3Key: "resources/nomad-devops-custom-resources"
   },
   Handler: "index.handler",
   MemorySize: 128
-}).dependsOn("CustomResourceProviderPolicy");
+}).dependsOn("CustomResourceProviderRole");

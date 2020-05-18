@@ -51,7 +51,7 @@ export const CustomResourceProviderPolicy = new IAM.Policy({
           "route53:AssociateVPCWithHostedZone",
           "route53:AssociateVPCWithHostedZone"
         ],
-        Resource: "arn:aws:route53:*:*:*"
+        Resource: "arn:aws:route53:::*"
       }
     ]
   }

@@ -1,8 +1,11 @@
-import DEBUG from "debug";
-const Debug = (filter: string) =>
-  DEBUG("devops:src:nomadDevops" + (filter.length ? `:${filter}` : ""));
-const debug = Debug("");
+import CF from "cloudform";
+import { buildNomadDevopsTemplate } from "../templates";
+import { handleStack } from "../lib";
 
-interface DeployNomadDevopsParams {}
-
-export const deployNomadDevops = async ({}: DeployNomadDevopsParams) => {};
+export const deployNomadDevops = async () => {
+  return await handleStack({
+    StackName: "nomad-devops",
+    Capabilities: ["CAPABILITY_NAMED_IAM"],
+    TemplateBody: CF(await buildNomadDevopsTemplate())
+  });
+};

@@ -11,7 +11,9 @@ import { Configuration } from "./Configuration";
 import { kebabCaseDomainName } from "../lib/strings";
 
 export const getUserConfig = ({ cwd, searchRoots }: { cwd: string; searchRoots: string[] }) => {
-  const { root } = path.parse(cwd);
+  const pathParse = path.parse(cwd);
+  const { root } = pathParse;
+  debug({ cwd, pathParse, searchRoots });
   if (cwd === path.resolve(__dirname, "..")) {
     // load dotenv when working in repo so system
     // can be used to deploy docs
@@ -24,13 +26,16 @@ export const getUserConfig = ({ cwd, searchRoots }: { cwd: string; searchRoots: 
       const search: string[] = [];
       const _location =
         root === "/" ? location.slice(1).split("/") : location.replace(root, "").split("\\");
+      debug({ location, _location });
 
       do {
         search.push(root.concat(_location.join("/")));
         _location.pop();
       } while (_location.length);
 
-      return search.reverse();
+      const reversed = search.reverse();
+      debug("search.reverse() :", reversed);
+      return reversed;
     };
 
     // de-duplicate paths in order of insertion
@@ -68,7 +73,9 @@ export const getUserConfig = ({ cwd, searchRoots }: { cwd: string; searchRoots: 
   }
   const configFiles: string[] = [];
   const listContents = (dir: string) => {
+    debug("listContnts() dir :", dir);
     const list = readdirSync(dir);
+    debug("listContnts() list :", dir);
     const pkg = list.find(filename => filename === "package.json");
 
     const configs = list
@@ -86,7 +93,11 @@ export const getUserConfig = ({ cwd, searchRoots }: { cwd: string; searchRoots: 
   const mergeContentsOfDir = (dir: string): Partial<Configuration> => {
     directoriesSearched.push(dir);
     let config: Partial<Configuration> = {};
+
+    debug("mergeContentsOfDir() dir :", dir);
     const { configs, pkg } = listContents(dir);
+    debug("mergeContentsOfDir() contents :", { configs, pkg });
+
     for (const _config of configs) {
       const extension = _config.split(".").pop() as keyof typeof handlers;
       config = {
@@ -107,9 +118,12 @@ export const getUserConfig = ({ cwd, searchRoots }: { cwd: string; searchRoots: 
 
   const buildConfig = (): Partial<Configuration> => {
     let config: Partial<Configuration> = {};
+    debug("buildConfig() config: ", config);
     for (const current of buildPlacesToSearch()) {
+      debug("buildConfig() current: ", current);
       const _config = mergeContentsOfDir(current);
       config = { ...config, ..._config };
+      debug("buildConfig() config: ", config);
     }
     return config;
   };

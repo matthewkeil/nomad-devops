@@ -12,16 +12,6 @@ export const buildNomadDevopsTemplate = async () => {
   const template = {
     AWSTemplateFormatVersion: "2010-09-09",
     Description: "NomadDevops stack that makes the 'the lights turn on'...",
-    Parameters: {
-      NomadDevopsBucket: {
-        Type: "String",
-        Default: "api"
-      },
-      NomadDevopsHandlerKey: {
-        Type: "String",
-        Default: "api"
-      }
-    },
     Resources: {
       CustomResourceProvider,
       CustomResourceProviderRole,

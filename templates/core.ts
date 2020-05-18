@@ -57,17 +57,17 @@ export const buildCoreTemplate = async ({
         Export: {
           Name: `${config.PROJECT_NAME}-hosted-zone`
         }
-      },
-      Certificate: {
-        Description: `SSL/TLS Certificate covering ${config.ROOT_DOMAIN}`,
-        Value: Fn.Ref("Certificate"),
-        Export: {
-          Name: `${config.PROJECT_NAME}-certificate`
-        }
       }
+      // Certificate: {
+      //   Description: `SSL/TLS Certificate covering ${config.ROOT_DOMAIN}`,
+      //   Value: Fn.Ref("Certificate"),
+      //   Export: {
+      //     Name: `${config.PROJECT_NAME}-certificate`
+      //   }
+      // }
     }
   };
-  
+
   if (hostedZone) {
     template.Parameters["HostedZone"] = {
       Description: "Existing HostedZone for " + config.ROOT_DOMAIN,
@@ -78,19 +78,19 @@ export const buildCoreTemplate = async ({
     template.Resources["HostedZone"] = HostedZone;
   }
 
-  if (gSuite) {
-    template.Resources["GSuiteMXRecordSet"] = GSuiteMXRecordSet;
-  }
+  // if (gSuite) {
+  //   template.Resources["GSuiteMXRecordSet"] = GSuiteMXRecordSet;
+  // }
 
-  if (certificate) {
-    template.Parameters["Certificate"] = {
-      Description: "Existing certificate for " + config.ROOT_DOMAIN,
-      Type: "String",
-      Default: certificate
-    };
-  } else {
-    template.Resources["Certificate"] = Certificate;
-  }
+  // if (certificate) {
+  //   template.Parameters["Certificate"] = {
+  //     Description: "Existing certificate for " + config.ROOT_DOMAIN,
+  //     Type: "String",
+  //     Default: certificate
+  //   };
+  // } else {
+  //   template.Resources["Certificate"] = Certificate;
+  // }
 
   // if (cognito) {
   //   template.Resources["UserRole"] = UserRole;

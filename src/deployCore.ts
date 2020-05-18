@@ -1,5 +1,6 @@
 import DEBUG from "debug";
-const Debug = (filter: string) => DEBUG("devops:src:deployCore" + (filter.length ? `:${filter}` : ""));
+const Debug = (filter: string) =>
+  DEBUG("devops:src:deployCore" + (filter.length ? `:${filter}` : ""));
 const debug = Debug("");
 import cloudform from "cloudform";
 import { buildCoreTemplate } from "../templates";
@@ -8,14 +9,20 @@ import {
   getZoneInfoForDomain,
   handleStack,
   getDomainRecords,
-  output
+  output,
+  getStack
 } from "../lib";
+import { deployNomadDevops } from "./nomadDevops";
 
 interface CoreStackParam {
   rootDomain: string;
   stackName: string;
 }
 export const deployCore = async ({ rootDomain, stackName }: CoreStackParam) => {
+  const nomadDevopsStack = await getStack({ StackName: "nomad-devops" });
+  if (!nomadDevopsStack) await deployNomadDevops();
+  debug("nomadDevopsStack : ", nomadDevopsStack);
+
   const [nslookup, zoneInfo, certificate] = await Promise.all([
     getDomainRecords({
       domain: rootDomain,
