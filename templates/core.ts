@@ -67,13 +67,7 @@ export const buildCoreTemplate = async ({
       }
     }
   };
-
-  if (!(await apiGatewayAccountExists())) {
-    template.Resources["ApiGatewayAccount"] = ApiGatewayAccount;
-    template.Resources["ApiGatewayPolicy"] = ApiGatewayPolicy;
-    template.Resources["ApiGatewayRole"] = ApiGatewayRole;
-  }
-
+  
   if (hostedZone) {
     template.Parameters["HostedZone"] = {
       Description: "Existing HostedZone for " + config.ROOT_DOMAIN,

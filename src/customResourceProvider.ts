@@ -11,10 +11,10 @@ export type ResourceHandler = (
 
 import axios from "axios";
 import { v4 } from "uuid";
-import { recordSetProvider } from "./recordSetProvider";
-import { hostedZoneProvider } from "./hostedZoneProvider";
-import { certificateProvider } from "./certificateProvider";
-import { certificateRequestProvider } from "./certificateRequestProvider";
+import { recordSetProvider } from "./customResources/recordSetProvider";
+import { hostedZoneProvider } from "./customResources/hostedZoneProvider";
+import { certificateProvider } from "./customResources/certificateProvider";
+import { certificateRequestProvider } from "./customResources/certificateRequestProvider";
 
 const resourceProviders = {
   RecordSet: recordSetProvider,

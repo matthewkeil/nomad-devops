@@ -5,7 +5,7 @@ const Debug = (filter: string) =>
   );
 const debug = Debug("");
 import { CloudFormationCustomResourceResponse } from "aws-lambda";
-import { ResourceHandler } from "./customResourceProvider";
+import { ResourceHandler } from "../customResourceProvider";
 import {} from "../../lib";
 
 export const recordSetProvider: ResourceHandler = async event => {

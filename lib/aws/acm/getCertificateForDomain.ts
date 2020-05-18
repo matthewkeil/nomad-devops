@@ -1,5 +1,5 @@
-import { config } from "../../config";
-import { normalizeDomain } from "../strings";
+import { config } from "../../../config";
+import { normalizeDomain } from "../../strings";
 import { ACM } from "aws-sdk";
 
 const extractSubdomains = (domain, base) => {
@@ -7,12 +7,14 @@ const extractSubdomains = (domain, base) => {
   return result.endsWith(".") ? result.slice(0, -1) : result;
 };
 
-export const getCertForDomain = async (domain: string) => {
+export const getCertificateForDomain = async (
+  domain: string
+): Promise<ACM.DescribeCertificateResponse> => {
   async function finalize(Certificate: ACM.CertificateDetail) {
-    if (Certificate?.CertificateArn)
-      return await config.acm
-        .describeCertificate({ CertificateArn: Certificate.CertificateArn })
-        .promise();
+    if (!Certificate?.CertificateArn) return {};
+    return await config.acm
+      .describeCertificate({ CertificateArn: Certificate.CertificateArn })
+      .promise();
   }
   const { CertificateSummaryList } = await config.acm.listCertificates().promise();
   const certSummary = CertificateSummaryList.find(({ DomainName }) =>
@@ -31,7 +33,7 @@ export const getCertForDomain = async (domain: string) => {
         });
         if (match) return finalize(Certificate);
       }
-      return;
+      return {};
     }
     return finalize(Certificate);
   }

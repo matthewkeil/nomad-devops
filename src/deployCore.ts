@@ -4,7 +4,7 @@ const debug = Debug("");
 import cloudform from "cloudform";
 import { buildCoreTemplate } from "../templates";
 import {
-  getCertForDomain,
+  getCertificateForDomain,
   getZoneInfoForDomain,
   handleStack,
   getDomainRecords,
@@ -22,7 +22,7 @@ export const deployCore = async ({ rootDomain, stackName }: CoreStackParam) => {
       getMx: true
     }),
     getZoneInfoForDomain(rootDomain),
-    getCertForDomain(rootDomain)
+    getCertificateForDomain(rootDomain)
   ]);
   debug(nslookup, zoneInfo, certificate);
 

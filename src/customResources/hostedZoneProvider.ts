@@ -3,7 +3,7 @@ const Debug = (filter: string) =>
   DEBUG("devops:src:customResources:hostedZoneProvider" + (filter.length ? `:${filter}` : ""));
 const debug = Debug("");
 import { CloudFormationCustomResourceResponse } from "aws-lambda";
-import { ResourceHandler } from "./customResourceProvider";
+import { ResourceHandler } from "../customResourceProvider";
 import {
   createHostedZone,
   updateHostedZone,
