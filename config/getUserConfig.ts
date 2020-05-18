@@ -128,7 +128,15 @@ export const getUserConfig = ({ cwd, searchRoots }: { cwd: string; searchRoots: 
     return config;
   };
 
-  const config = buildConfig();
+  let config: Partial<Configuration> = {};
+  if (process.env.LAMBDA !== "true") {
+    try {
+      config = buildConfig();
+    } catch (err) {
+      console.log(">>>\n>>> Error encountered when trying to build nomad-devops config:\n", err);
+    }
+  }
+
   if (!config.PROJECT_NAME) config.PROJECT_NAME = kebabCaseDomainName(config.ROOT_DOMAIN);
 
   config.AWS_SERVICE_CONFIG = Object.keys(config.AWS_SERVICE_CONFIG || {}).length

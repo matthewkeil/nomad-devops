@@ -1,8 +1,8 @@
 require("dotenv").config();
 module.exports = {
   REGION: "us-east-1",
-  ROOT_DOMAIN: "nomad.house",
-  PROJECT_NAME: "nomad-devops",
+  ROOT_DOMAIN: "microlot.cafe",
+  // PROJECT_NAME: "nomad-devops",
   ROOT_OBJECT: "en/index.html",
   SUB_DOMAIN: "devops",
   ALLOW_NAKED: true,

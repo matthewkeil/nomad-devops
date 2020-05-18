@@ -10,5 +10,11 @@ export const CustomResourceProvider = new Lambda.Function({
     S3Key: "resources/nomad-devops-custom-resources"
   },
   Handler: "index.handler",
-  MemorySize: 128
+  MemorySize: 128,
+  Environment: {
+    Variables: {
+      DEBUG: process.env.DEBUG,
+      LAMBDA: "true"
+    }
+  }
 }).dependsOn("CustomResourceProviderRole");

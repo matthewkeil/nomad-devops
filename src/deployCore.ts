@@ -12,7 +12,7 @@ import {
   output,
   getStack
 } from "../lib";
-import { deployNomadDevops } from "./nomadDevops";
+import { deployNomadDevops } from "./deployNomadDevops";
 
 interface CoreStackParam {
   rootDomain: string;
