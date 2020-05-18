@@ -1,40 +1,37 @@
 import { ACM } from "aws-sdk";
 import { config } from "../../../config";
 
-const organizeOptions = ({
-  Certificate,
-  DomainValidationOptions
-}: {
-  Certificate: ACM.CertificateDetail;
-  DomainValidationOptions: ACM.DomainValidationList;
-}) =>
-  DomainValidationOptions.filter(opt => {
-    return opt.DomainName === Certificate.DomainName && opt.ValidationMethod === "DNS";
-  }).reduce(
+const organizeOptions = (Certificate: ACM.CertificateDetail) =>
+  Certificate.DomainValidationOptions.filter(
+    opt => opt.DomainName === Certificate.DomainName && opt.ValidationMethod === "DNS"
+  ).reduce(
     (all, opt) => {
       switch (opt.ValidationStatus) {
         case "PENDING_VALIDATION":
-          all.pending.push(opt);
+          all.pending = all.pending ? all.pending.concat(opt) : [opt];
           break;
         case "SUCCESS":
-          all.success.push(opt);
+          all.success = all.success ? all.success.concat(opt) : [opt];
           break;
         case "FAILED":
-          all.failed.push(opt);
+          all.failed = all.failed ? all.failed.concat(opt) : [opt];
           break;
       }
       return all;
     },
-    {
-      failed: [] as ACM.DomainValidation[],
-      success: [] as ACM.DomainValidation[],
-      pending: [] as ACM.DomainValidation[]
+    {} as {
+      failed?: ACM.DomainValidation[];
+      success?: ACM.DomainValidation[];
+      pending?: ACM.DomainValidation[];
     }
   );
 
 async function* pollStatus(arn: string) {
   while (true) {
     const { Certificate } = await config.acm.describeCertificate({ CertificateArn: arn }).promise();
+    const options = organizeOptions(Certificate);
+    // const pending = !!options.pending?.length;
+    // const failed = !!options.failed?.length;
     yield Certificate.Status;
   }
 }

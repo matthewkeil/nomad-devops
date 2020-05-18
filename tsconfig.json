@@ -2,6 +2,7 @@
   "include": [
     "package.json",
     "index.ts",
+    "webpack.config.ts",
     "test.ts",
     "config/**/*",
     "templates/**/*",

@@ -1,0 +1,1 @@
+{"version":3,"file":"HostedZone.js","sourceRoot":"","sources":["../../../templates/route53/HostedZone.ts"],"names":[],"mappings":";;;AAAA,yCAAoC;AACpC,yCAAsC;AAEzB,QAAA,UAAU,GAAG,IAAI,mBAAO,CAAC,UAAU,CAAC;IAC/C,IAAI,EAAE,eAAM,CAAC,WAAW;IACxB,gBAAgB,EAAE;QAChB,OAAO,EAAE,kBAAkB,eAAM,CAAC,WAAW,EAAE;KAChD;CACF,CAAC,CAAC"}

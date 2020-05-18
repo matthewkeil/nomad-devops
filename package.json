@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Full Ops and Devops platform targeted at digital nomads and startups. Utilizes AWS platform and CloudFormation to set up everything with IaaC",
   "scripts": {
+    "build-resources": "npm run ts node_modules/.bin/webpack",
     "docs-dev": "vuepress dev docs",
     "docs-build": "vuepress build docs",
     "deploy": "npm run ts bin/deploy",
@@ -25,7 +26,7 @@
     "@types/morgan": "^1.7.37",
     "@types/node": "^12.12.7",
     "@types/uuid": "^7.0.3",
-    "@types/webpack": "^4.41.0",
+    "@types/webpack": "^4.41.13",
     "@typescript-eslint/eslint-plugin": "^2.6.1",
     "@typescript-eslint/parser": "^2.6.1",
     "@vuepress/plugin-active-header-links": "^1.4.1",
@@ -40,7 +41,7 @@
     "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-prettier": "^3.1.1",
     "prettier": "^1.17.1",
-    "ts-loader": "^6.2.1",
+    "ts-loader": "^6.2.2",
     "ts-node": "^8.4.1",
     "typescript": "^3.9.2",
     "vue-toasted": "^1.1.28",
@@ -50,7 +51,9 @@
     "vuepress-plugin-redirect": "^1.2.3",
     "vuepress-plugin-smooth-scroll": "0.0.9",
     "vuepress-plugin-typescript": "^0.2.0",
-    "vuepress-types": "^0.9.2"
+    "vuepress-types": "^0.9.2",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
   },
   "dependencies": {
     "@octokit/rest": "^16.34.1",
@@ -84,14 +87,5 @@
   },
   "keywords": [],
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist/**/*"
-  ],
-  "bin": {
-    "deploy": "dist/bin/deploy.js"
-  },
-  "engines": {
-    "node": "<14.0.0"
-  }
+  "types": "dist/index.d.ts"
 }

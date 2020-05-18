@@ -1,0 +1,1 @@
+{"version":3,"file":"CustomResourceProviderLogGroup.js","sourceRoot":"","sources":["../../../templates/logs/CustomResourceProviderLogGroup.ts"],"names":[],"mappings":";;;AAAA,yCAAqC;AAExB,QAAA,8BAA8B,GAAG,IAAI,gBAAI,CAAC,QAAQ,CAAC;IAC9D,YAAY,EAAE,cAAE,CAAC,IAAI,CAAC,GAAG,EAAE,CAAC,aAAa,EAAE,cAAE,CAAC,GAAG,CAAC,wBAAwB,CAAC,CAAC,CAAC;IAC7E,eAAe,EAAE,CAAC;CACnB,CAAC,CAAC"}

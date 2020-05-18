@@ -1,0 +1,1 @@
+{"version":3,"file":"normalizeDomain.js","sourceRoot":"","sources":["../../../lib/strings/normalizeDomain.ts"],"names":[],"mappings":";;;AAAa,QAAA,eAAe,GAAG,CAAC,MAAc,EAAE,EAAE,CAChD,MAAM;KACH,WAAW,EAAE;KACb,KAAK,CAAC,GAAG,CAAC;KACV,MAAM,CAAC,IAAI,CAAC,EAAE,CAAC,CAAC,CAAC,IAAI,CAAC;KACtB,IAAI,CAAC,GAAG,CAAC,CAAC"}
