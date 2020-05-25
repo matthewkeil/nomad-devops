@@ -1,6 +1,6 @@
 {
     "name": "nomad-devops",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Full Ops and Devops platform targeted at digital nomads and startups. Utilizes AWS platform and CloudFormation to set up everything with IaaC",
     "scripts": {
         "docs-dev": "vuepress dev docs",

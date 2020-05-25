@@ -25,15 +25,16 @@ exports.deployNomadDevops = () => __awaiter(void 0, void 0, void 0, function* ()
     const Bucket = "nomad-devops";
     const Prefix = "resources/custom";
     const { Contents = [] } = yield config_1.config.s3.listObjects({ Bucket, Prefix }).promise();
-    debug({ Bucket, Prefix, Contents });
-    if (!((_a = Contents[0]) === null || _a === void 0 ? void 0 : _a.Key))
+    const Key = (_a = Contents[0]) === null || _a === void 0 ? void 0 : _a.Key;
+    debug({ Bucket, Prefix, Key, Contents });
+    if (!Key)
         throw new Error("could not locate custom resources");
     return yield lib_1.handleStack({
         StackName: "nomad-devops",
         Capabilities: ["CAPABILITY_NAMED_IAM"],
         TemplateBody: cloudform_1.default(yield templates_1.buildNomadDevopsTemplate({
-            customResourceBucket: Bucket,
-            customResourceKey: Contents[0].Key
+            Bucket,
+            Key
         }))
     });
 });

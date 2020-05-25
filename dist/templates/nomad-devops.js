@@ -19,22 +19,12 @@ const lib_1 = require("../lib");
 const ApiGatewayAccount_1 = require("./apiGateway/ApiGatewayAccount");
 const ApiGatewayPolicy_1 = require("./apiGateway/ApiGatewayPolicy");
 const ApiGatewayRole_1 = require("./apiGateway/ApiGatewayRole");
-exports.buildNomadDevopsTemplate = ({ customResourceKey, customResourceBucket }) => __awaiter(void 0, void 0, void 0, function* () {
+exports.buildNomadDevopsTemplate = ({ Key, Bucket }) => __awaiter(void 0, void 0, void 0, function* () {
     const template = {
         AWSTemplateFormatVersion: "2010-09-09",
         Description: "NomadDevops The Stack.  It makes the 'the lights turn on,'... yo...",
-        Parameters: {
-            CustomResourceBucket: {
-                Type: "String",
-                Default: customResourceBucket
-            },
-            CustomResourceKey: {
-                Type: "String",
-                Default: customResourceKey
-            }
-        },
         Resources: {
-            CustomResourceProvider: CustomResourceProvider_1.CustomResourceProvider,
+            CustomResourceProvider: CustomResourceProvider_1.CustomResourceProvider({ Bucket, Key }),
             CustomResourceProviderRole: CustomResourceProviderRole_1.CustomResourceProviderRole,
             CustomResourceProviderPolicy: CustomResourceProviderPolicy_1.CustomResourceProviderPolicy,
             CustomResourceProviderLogGroup: CustomResourceProviderLogGroup_1.CustomResourceProviderLogGroup

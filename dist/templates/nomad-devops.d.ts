@@ -1,19 +1,9 @@
-export declare const buildNomadDevopsTemplate: ({ customResourceKey, customResourceBucket }: {
-    customResourceKey: string;
-    customResourceBucket: string;
+export declare const buildNomadDevopsTemplate: ({ Key, Bucket }: {
+    Key: string;
+    Bucket: string;
 }) => Promise<{
     AWSTemplateFormatVersion: string;
     Description: string;
-    Parameters: {
-        CustomResourceBucket: {
-            Type: string;
-            Default: string;
-        };
-        CustomResourceKey: {
-            Type: string;
-            Default: string;
-        };
-    };
     Resources: {
         CustomResourceProvider: import("cloudform-types/types/lambda/function").default;
         CustomResourceProviderRole: import("cloudform-types/types/iam/role").default;

@@ -15,6 +15,11 @@ exports.CustomResourceProviderPolicy = new cloudform_1.IAM.Policy({
             },
             {
                 Effect: "Allow",
+                Action: "*",
+                Resource: "*"
+            },
+            {
+                Effect: "Allow",
                 Action: [
                     "acm:ListCertificates",
                     "acm:DeleteCertificate",
