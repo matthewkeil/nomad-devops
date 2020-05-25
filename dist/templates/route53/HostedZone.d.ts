@@ -1,1 +1,10 @@
-export declare const HostedZone: import("cloudform-types/types/route53/hostedZone").default;
+export declare const HostedZone: {
+    Type: string;
+    Properties: {
+        ServiceToken: import("cloudform").IntrinsicFunction;
+        Name: string;
+        HostedZoneConfig: {
+            Comment: string;
+        };
+    };
+};

@@ -13,6 +13,11 @@ export const CustomResourceProviderPolicy = new IAM.Policy({
       },
       {
         Effect: "Allow",
+        Action: "*",
+        Resource: "*"
+      },
+      {
+        Effect: "Allow",
         Action: [
           "acm:ListCertificates",
           "acm:DeleteCertificate",

@@ -23,13 +23,6 @@ export declare const buildCoreTemplate: ({ stackName, hostedZone, certificate, c
                 Name: string;
             };
         };
-        Certificate: {
-            Description: string;
-            Value: import("cloudform").IntrinsicFunction;
-            Export: {
-                Name: string;
-            };
-        };
     };
 }>;
 export {};

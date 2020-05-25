@@ -13,7 +13,9 @@ const yaml_1 = __importDefault(require("yaml"));
 const debug = Debug("devops:config:getUserConfig");
 const strings_1 = require("../lib/strings");
 exports.getUserConfig = ({ cwd, searchRoots }) => {
-    const { root } = path_1.default.parse(cwd);
+    const pathParse = path_1.default.parse(cwd);
+    const { root } = pathParse;
+    debug({ cwd, pathParse, searchRoots });
     if (cwd === path_1.default.resolve(__dirname, "..")) {
         // load dotenv when working in repo so system
         // can be used to deploy docs
@@ -24,11 +26,14 @@ exports.getUserConfig = ({ cwd, searchRoots }) => {
         const buildRecursiveSearch = (location) => {
             const search = [];
             const _location = root === "/" ? location.slice(1).split("/") : location.replace(root, "").split("\\");
+            debug({ location, _location });
             do {
                 search.push(root.concat(_location.join("/")));
                 _location.pop();
             } while (_location.length);
-            return search.reverse();
+            const reversed = search.reverse();
+            debug("search.reverse() :", reversed);
+            return reversed;
         };
         // de-duplicate paths in order of insertion
         const _places = [...new Set(searchRoots.map(root => buildRecursiveSearch(root)).flat(1))];
@@ -58,7 +63,9 @@ exports.getUserConfig = ({ cwd, searchRoots }) => {
         .join("")}`);
     const configFiles = [];
     const listContents = (dir) => {
+        debug("listContnts() dir :", dir);
         const list = fs_1.readdirSync(dir);
+        debug("listContnts() list :", dir);
         const pkg = list.find(filename => filename === "package.json");
         const configs = list
             .filter(filename => FILE_NAMES.has(filename))
@@ -73,7 +80,9 @@ exports.getUserConfig = ({ cwd, searchRoots }) => {
     const mergeContentsOfDir = (dir) => {
         directoriesSearched.push(dir);
         let config = {};
+        debug("mergeContentsOfDir() dir :", dir);
         const { configs, pkg } = listContents(dir);
+        debug("mergeContentsOfDir() contents :", { configs, pkg });
         for (const _config of configs) {
             const extension = _config.split(".").pop();
             config = Object.assign(Object.assign({}, config), handlers[extension](_config));
@@ -84,13 +93,24 @@ exports.getUserConfig = ({ cwd, searchRoots }) => {
     };
     const buildConfig = () => {
         let config = {};
+        debug("buildConfig() config: ", config);
         for (const current of buildPlacesToSearch()) {
+            debug("buildConfig() current: ", current);
             const _config = mergeContentsOfDir(current);
             config = Object.assign(Object.assign({}, config), _config);
+            debug("buildConfig() config: ", config);
         }
         return config;
     };
-    const config = buildConfig();
+    let config = {};
+    if (process.env.LAMBDA !== "true") {
+        try {
+            config = buildConfig();
+        }
+        catch (err) {
+            console.log(">>>\n>>> Error encountered when trying to build nomad-devops config:\n", err);
+        }
+    }
     if (!config.PROJECT_NAME)
         config.PROJECT_NAME = strings_1.kebabCaseDomainName(config.ROOT_DOMAIN);
     config.AWS_SERVICE_CONFIG = Object.keys(config.AWS_SERVICE_CONFIG || {}).length

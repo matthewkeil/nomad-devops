@@ -8,7 +8,7 @@ export interface DomainRecords {
   domain: string;
   ns: Set<string>;
   soa: SoaRecord;
-  mx: Map<MxRecord["exchange"], MxRecord["priority"]>;
+  mx?: Map<MxRecord["exchange"], MxRecord["priority"]>;
   cname?: Map<string, string>;
 }
 export const getDomainRecords = async ({
@@ -36,7 +36,7 @@ export const getDomainRecords = async ({
     };
   } catch (err) {
     debug(err);
-    return;
+    return records;
   }
 
   if (getMx) {

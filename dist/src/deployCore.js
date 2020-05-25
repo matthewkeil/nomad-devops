@@ -19,7 +19,12 @@ const debug = Debug("");
 const cloudform_1 = __importDefault(require("cloudform"));
 const templates_1 = require("../templates");
 const lib_1 = require("../lib");
+const deployNomadDevops_1 = require("./deployNomadDevops");
 exports.deployCore = ({ rootDomain, stackName }) => __awaiter(void 0, void 0, void 0, function* () {
+    const nomadDevopsStack = yield lib_1.getStack({ StackName: "nomad-devops" });
+    if (!nomadDevopsStack)
+        yield deployNomadDevops_1.deployNomadDevops();
+    debug("nomadDevopsStack : ", nomadDevopsStack);
     const [nslookup, zoneInfo, certificate] = yield Promise.all([
         lib_1.getDomainRecords({
             domain: rootDomain,

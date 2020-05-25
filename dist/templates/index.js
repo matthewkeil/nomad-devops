@@ -12,4 +12,5 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./core"), exports);
 __exportStar(require("./client"), exports);
+__exportStar(require("./nomad-devops"), exports);
 //# sourceMappingURL=index.js.map

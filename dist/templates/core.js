@@ -13,8 +13,6 @@ exports.buildCoreTemplate = void 0;
 const cloudform_1 = require("cloudform");
 const config_1 = require("../config");
 const HostedZone_1 = require("./route53/HostedZone");
-const GSuiteMXRecordSet_1 = require("./route53/GSuiteMXRecordSet");
-const Certificate_1 = require("./certificateManager/Certificate");
 exports.buildCoreTemplate = ({ stackName, hostedZone, certificate, cognito = false, gSuite = false }) => __awaiter(void 0, void 0, void 0, function* () {
     const template = {
         Description: stackName,
@@ -33,14 +31,14 @@ exports.buildCoreTemplate = ({ stackName, hostedZone, certificate, cognito = fal
                 Export: {
                     Name: `${config_1.config.PROJECT_NAME}-hosted-zone`
                 }
-            },
-            Certificate: {
-                Description: `SSL/TLS Certificate covering ${config_1.config.ROOT_DOMAIN}`,
-                Value: cloudform_1.Fn.Ref("Certificate"),
-                Export: {
-                    Name: `${config_1.config.PROJECT_NAME}-certificate`
-                }
             }
+            // Certificate: {
+            //   Description: `SSL/TLS Certificate covering ${config.ROOT_DOMAIN}`,
+            //   Value: Fn.Ref("Certificate"),
+            //   Export: {
+            //     Name: `${config.PROJECT_NAME}-certificate`
+            //   }
+            // }
         }
     };
     if (hostedZone) {
@@ -53,19 +51,18 @@ exports.buildCoreTemplate = ({ stackName, hostedZone, certificate, cognito = fal
     else {
         template.Resources["HostedZone"] = HostedZone_1.HostedZone;
     }
-    if (gSuite) {
-        template.Resources["GSuiteMXRecordSet"] = GSuiteMXRecordSet_1.GSuiteMXRecordSet;
-    }
-    if (certificate) {
-        template.Parameters["Certificate"] = {
-            Description: "Existing certificate for " + config_1.config.ROOT_DOMAIN,
-            Type: "String",
-            Default: certificate
-        };
-    }
-    else {
-        template.Resources["Certificate"] = Certificate_1.Certificate;
-    }
+    // if (gSuite) {
+    //   template.Resources["GSuiteMXRecordSet"] = GSuiteMXRecordSet;
+    // }
+    // if (certificate) {
+    //   template.Parameters["Certificate"] = {
+    //     Description: "Existing certificate for " + config.ROOT_DOMAIN,
+    //     Type: "String",
+    //     Default: certificate
+    //   };
+    // } else {
+    //   template.Resources["Certificate"] = Certificate;
+    // }
     // if (cognito) {
     //   template.Resources["UserRole"] = UserRole;
     //   template.Resources["UserPolicy"] = UserPolicy;

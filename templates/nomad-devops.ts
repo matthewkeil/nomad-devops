@@ -8,12 +8,18 @@ import { ApiGatewayAccount } from "./apiGateway/ApiGatewayAccount";
 import { ApiGatewayPolicy } from "./apiGateway/ApiGatewayPolicy";
 import { ApiGatewayRole } from "./apiGateway/ApiGatewayRole";
 
-export const buildNomadDevopsTemplate = async () => {
+export const buildNomadDevopsTemplate = async ({
+  Key,
+  Bucket
+}: {
+  Key: string;
+  Bucket: string;
+}) => {
   const template = {
     AWSTemplateFormatVersion: "2010-09-09",
-    Description: "NomadDevops stack that makes the 'the lights turn on'...",
+    Description: "NomadDevops The Stack.  It makes the 'the lights turn on,'... yo...",
     Resources: {
-      CustomResourceProvider,
+      CustomResourceProvider: CustomResourceProvider({ Bucket, Key }),
       CustomResourceProviderRole,
       CustomResourceProviderPolicy,
       CustomResourceProviderLogGroup

@@ -32,7 +32,7 @@ exports.getDomainRecords = ({ domain, getCname, getMx = false }) => __awaiter(vo
     }
     catch (err) {
         debug(err);
-        return;
+        return records;
     }
     if (getMx) {
         records.mx = new Map();
