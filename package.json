@@ -1,6 +1,6 @@
 {
   "name": "nomad-devops",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Full Ops and Devops platform targeted at digital nomads and startups. Utilizes AWS platform and CloudFormation to set up everything with IaaC",
   "scripts": {
     "docs-dev": "vuepress dev docs",
@@ -11,11 +11,15 @@
     "lint": "node_modules/.bin/eslint --ext .ts --fix bin/ lib/ templates/",
     "preversion": "npm run lint && git add -A",
     "postversion": "git push && git push --tags && npm publish",
+    "webpack": "npm run ts node_modules/.bin/webpack",
     "node": "node",
     "ts": "npm run node -- -r ts-node/register",
     "debug": "npm run ts --inspect-brk"
   },
   "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "@types/archiver": "^3.1.0",
     "@types/aws-lambda": "^8.10.51",
     "@types/body-parser": "^1.17.1",
     "@types/compression": "^1.0.1",
@@ -24,6 +28,8 @@
     "@types/helmet": "0.0.45",
     "@types/morgan": "^1.7.37",
     "@types/node": "^12.12.7",
+    "@types/shortid": "0.0.29",
+    "@types/simple-oauth2": "^2.5.3",
     "@types/uuid": "^7.0.3",
     "@types/webpack": "^4.41.13",
     "@typescript-eslint/eslint-plugin": "^2.6.1",
@@ -35,14 +41,20 @@
     "@vuepress/plugin-medium-zoom": "^1.4.1",
     "@vuepress/plugin-nprogress": "^1.4.1",
     "@vuepress/plugin-register-components": "^1.4.1",
+    "archiver": "^4.0.1",
     "debug": "^4.1.1",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-prettier": "^3.1.1",
+    "nomad-custom-resources": "0.0.4",
+    "nomad-netlify-cms-auth": "0.0.2",
     "prettier": "^1.17.1",
+    "shebang-loader": "0.0.1",
+    "shortid": "^2.2.15",
     "ts-loader": "^6.2.2",
     "ts-node": "^8.4.1",
     "typescript": "^3.9.2",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "vue-toasted": "^1.1.28",
     "vuepress": "^1.4.1",
     "vuepress-plugin-clean-urls": "^1.1.1",
@@ -52,7 +64,8 @@
     "vuepress-plugin-typescript": "^0.2.0",
     "vuepress-types": "^0.9.2",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "webpack-stream": "^5.2.1"
   },
   "dependencies": {
     "@octokit/rest": "^16.34.1",
@@ -70,7 +83,9 @@
     "log-update": "^4.0.0",
     "mime-types": "^2.1.24",
     "morgan": "^1.9.1",
+    "randomstring": "^1.1.5",
     "rc-parser": "^1.0.2",
+    "simple-oauth2": "^4.0.0",
     "uuid": "^8.0.0",
     "yaml": "^1.9.2"
   },

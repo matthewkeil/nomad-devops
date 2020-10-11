@@ -11,9 +11,9 @@ const processListForTable = ({ StackName, list }: { StackName: string; list: Sta
     .map(event => {
       const ResourceType = event.ResourceType.split("::");
       return {
-        StackName,
+        // StackName,
+        // Timestamp: event.Timestamp.toLocaleTimeString(),
         ResourceName: event.LogicalResourceId,
-        Timestamp: event.Timestamp.toLocaleTimeString(),
         Service: [...ResourceType].slice(-2)[0],
         Resource: [...ResourceType].pop(),
         Status: event.ResourceStatus.substring(0, 14)

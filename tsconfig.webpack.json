@@ -1,5 +1,6 @@
 {
-  "exclude": ["node_modules"],
+  "include": ["lib/api/**/*"],
+  "exclude": ["node_modules", "no_compile", "test", "**/*.spec.ts"],
   "compilerOptions": {
     "lib": ["ESNext", "ESNext.AsyncIterable", "ES2020"],
     "target": "es6",
@@ -9,11 +10,10 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "strict": false,
-    "sourceMap": true,
-    "declaration": true,
+    "sourceMap": false,
+    "declaration": false,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "outDir": "dist",
+    "emitDecoratorMetadata": false,
     "types": ["node"],
     "typeRoots": ["node_modules/@types"]
   }

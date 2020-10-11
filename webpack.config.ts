@@ -1,34 +1,55 @@
-import { resolve } from "path";
+require("dotenv").config();
 import { Configuration } from "webpack";
+import UglifyJsPlugin from "uglifyjs-webpack-plugin";
+import { config } from "./config";
+import { resolve } from "path";
 
-const PROD = process.env.NODE_ENV === "production";
-
-const config: Configuration = {
-  mode: PROD ? "production" : "development",
+const _config: Configuration = {
+  mode: config.PROD ? "production" : "development",
   target: "node",
-  devtool: PROD ? undefined : "eval-source-map",
-  entry: resolve(__dirname, "src", "customResourceProvider.ts"),
   output: {
-    path: resolve(__dirname, "build"),
-    filename: "nomad-devops-custom-resource-provider.js"
+    filename: "[name].js",
+    libraryTarget: "commonjs"
   },
   resolve: {
     modules: ["node_modules"],
     extensions: [".ts", ".js", ".json"]
   },
-  externals: [],
+  externals: ["aws-sdk"],
   module: {
     rules: [
       {
-        test: /\.ts$/,
-        loader: "ts-loader",
+        test: /\.(t|j)sx?$/,
+        use: [
+          {
+            loader: "babel-loader"
+          },
+          {
+            loader: "ts-loader",
+            options: {
+              configFile: resolve(__dirname, "tsconfig.webpack.json")
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(t|j)s$/,
         exclude: /node_modules/,
-        options: {
-          configFile: "tsconfig.prod.json"
-        }
+        use: [
+          {
+            loader: "shebang-loader"
+          }
+        ]
       }
     ]
+  },
+  optimization: {
+    minimizer: [new UglifyJsPlugin()]
   }
 };
 
-export default config;
+if (config.PROD) {
+  _config.devtool = "eval-source-map";
+}
+
+export default _config;

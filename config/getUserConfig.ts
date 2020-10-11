@@ -2,6 +2,7 @@ import DEBUG from "debug";
 const Debug = (filter: string) =>
   DEBUG("devops:config:getUserConfig" + (!!filter.length ? `:${filter}` : ""));
 import path from "path";
+import { execSync } from "child_process";
 import { readFileSync, readdirSync } from "fs";
 import { ACM, APIGateway, CloudFront, CloudFormation, IAM, SSM, S3, Route53 } from "aws-sdk";
 import YAML from "yaml";
@@ -9,6 +10,20 @@ import Debug from "debug";
 const debug = Debug("devops:config:getUserConfig");
 import { Configuration } from "./Configuration";
 import { kebabCaseDomainName } from "../lib/strings";
+
+export const getBranch = () => {
+  let output;
+  try {
+    output = execSync("git status");
+  } catch {
+    return "master";
+  }
+  const results = /^On\sbranch\s([\S]*).*/.exec(output.toString());
+  if (!results) {
+    throw new Error("Cannot determine what branch you are on");
+  }
+  return results[1];
+};
 
 export const getUserConfig = ({ cwd, searchRoots }: { cwd: string; searchRoots: string[] }) => {
   const pathParse = path.parse(cwd);
@@ -136,6 +151,8 @@ export const getUserConfig = ({ cwd, searchRoots }: { cwd: string; searchRoots: 
       console.log(">>>\n>>> Error encountered when trying to build nomad-devops config:\n", err);
     }
   }
+
+  config.BRANCH = process.env.BRANCH || getBranch();
 
   if (!config.PROJECT_NAME) config.PROJECT_NAME = kebabCaseDomainName(config.ROOT_DOMAIN);
 

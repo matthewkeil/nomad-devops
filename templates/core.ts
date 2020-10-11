@@ -2,12 +2,12 @@ import { Fn } from "cloudform";
 import { config } from "../config";
 import { apiGatewayAccountExists } from "../lib/aws";
 
-import { HostedZone } from "./route53/HostedZone";
-import { GSuiteMXRecordSet } from "./route53/GSuiteMXRecordSet";
-import { ApiGatewayAccount } from "./apiGateway/ApiGatewayAccount";
-import { ApiGatewayPolicy } from "./apiGateway/ApiGatewayPolicy";
-import { ApiGatewayRole } from "./apiGateway/ApiGatewayRole";
-import { Certificate } from "./certificateManager/Certificate";
+// import { HostedZone } from "./route53/HostedZone";
+// import { GSuiteMXRecordSet } from "./route53/GSuiteMXRecordSet";
+// import { ApiGatewayAccount } from "./apiGateway/ApiGatewayAccount";
+// import { ApiGatewayLoggingPolicy } from "./apiGateway/ApiGatewayLoggingPolicy";
+// import { ApiGatewayRole } from "./iam/ApiGatewayLoggingRole";
+// import { Certificate } from "./certificateManager/Certificate";
 // import { UserPool } from "./cognito/UserPool";
 // import { UserPoolClient } from "./cognito/UserPoolClient";
 // import { UserPoolDomain } from "./cognito/UserPoolDomain";
@@ -75,7 +75,7 @@ export const buildCoreTemplate = async ({
       Default: hostedZone
     };
   } else {
-    template.Resources["HostedZone"] = HostedZone;
+    // template.Resources["HostedZone"] = HostedZone;
   }
 
   // if (gSuite) {

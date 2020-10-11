@@ -1,1 +1,0 @@
-{"version":3,"file":"ApiGatewayAccount.js","sourceRoot":"","sources":["../../../templates/apiGateway/ApiGatewayAccount.ts"],"names":[],"mappings":";;;AAAA,yCAA2C;AAE9B,QAAA,iBAAiB,GAAG,IAAI,sBAAU,CAAC,OAAO,CAAC;IACtD,iBAAiB,EAAE,cAAE,CAAC,MAAM,CAAC,gBAAgB,EAAE,KAAK,CAAC;CACtD,CAAC,CAAC,SAAS,CAAC,kBAAkB,CAAC,CAAC"}

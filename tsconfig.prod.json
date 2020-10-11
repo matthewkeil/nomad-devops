@@ -13,7 +13,6 @@
     "declaration": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": false,
-    "baseUrl": ".",
     "outDir": "dist",
     "types": ["node"],
     "typeRoots": ["node_modules/@types"]

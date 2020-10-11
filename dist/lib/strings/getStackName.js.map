@@ -1,1 +1,0 @@
-{"version":3,"file":"getStackName.js","sourceRoot":"","sources":["../../../lib/strings/getStackName.ts"],"names":[],"mappings":";;;AAAA,yCAAsC;AACtC,iEAA6D;AAOhD,QAAA,YAAY,GAAG,CAAC,EAAE,KAAK,EAAE,MAAM,EAAuB,EAAE,EAAE,CACrE,KAAK,KAAK,MAAM;IACd,CAAC,CAAC,GAAG,0CAAmB,CAAC,eAAM,CAAC,WAAW,CAAC,IAAI,KAAK,EAAE;IACvD,CAAC,CAAC,GAAG,eAAM,CAAC,YAAY,IAAI,KAAK,IAAI,MAAM,EAAE,CAAC"}

@@ -2,6 +2,7 @@ import { Method } from "../lib/interfaces";
 
 export interface Configuration {
   PROJECT_NAME: string;
+  BRANCH: string;
   ROOT_DOMAIN: string;
   SUB_DOMAIN?: string;
   ALLOW_NAKED?: boolean;

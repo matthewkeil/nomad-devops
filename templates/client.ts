@@ -52,3 +52,5 @@ export const clientTemplate = ({ branch, StackName }: TemplateParams) => {
 
   return CF(template);
 };
+
+console.log(clientTemplate({ branch: "matt", StackName: "client-app-env" }));

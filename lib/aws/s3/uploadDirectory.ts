@@ -6,6 +6,7 @@ const debug = Debug("");
 import { S3 } from "aws-sdk";
 import { walkDirectory } from "./walkDirectory";
 import { output } from "../../utils";
+import { walkDirectory} from 'nomad-devops';
 
 interface UploadDirectoryParams {
   localPath: string; // path to upoad, relative to repo root

@@ -1,1 +1,0 @@
-{"version":3,"file":"ClientOriginAccessIdentity.js","sourceRoot":"","sources":["../../../templates/cloudfront/ClientOriginAccessIdentity.ts"],"names":[],"mappings":";;;AAAA,yCAA2C;AAE9B,QAAA,0BAA0B,GAAG,IAAI,sBAAU,CAAC,8BAA8B,CAAC;IACtF,oCAAoC,EAAE;QACpC,OAAO,EAAE,cAAE,CAAC,IAAI,CAAC,EAAE,EAAE,CAAC,6BAA6B,EAAE,cAAE,CAAC,GAAG,CAAC,UAAU,CAAC,CAAC,CAAC;KAC1E;CACF,CAAC,CAAC"}
