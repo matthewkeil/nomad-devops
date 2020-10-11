@@ -36,12 +36,12 @@ const _deploy = async () => {
     case "CORE":
       return deployCore({ rootDomain, stackName: coreStackName });
     default:
-    // deploy({
-    //   branch: "shimmyshimmy",
-    //   subDomain: "cocopop",
-    //   artifacts: ["docs", ".vuepress", "dist"],
-    //   framework: "vuepress"
-    // });
+      deploy({
+        branch: "shimmyshimmy",
+        subDomain: "cocopop",
+        artifacts: ["docs", ".vuepress", "dist"],
+        framework: "vuepress"
+      });
   }
 };
 
